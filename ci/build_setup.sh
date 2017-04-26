@@ -111,7 +111,7 @@ else
   -DENVOY_PROTOBUF_INCLUDE_DIR:FILEPATH=/thirdparty_build/include \
   -DENVOY_PROTOBUF_PROTOC:FILEPATH=/thirdparty_build/bin/protoc \
   -DENVOY_GCOVR:FILEPATH=/thirdparty/gcovr-3.3/scripts/gcovr \
-  -DENVOY_RAPIDJSON_INCLUDE_DIR:FILEPATH=/thirdparty/rapidjson-1.1.0/include \
+  -DENVOY_RAPIDJSON_INCLUDE_DIR:FILEPATH=/thirdparty/rapidjson-b45c5408d18e491d8d4c158cbbff5a805089500c/include \
   -DENVOY_GCOVR_EXTRA_ARGS:STRING="-e test/* -e build/*" \
   -DENVOY_EXE_EXTRA_LINKER_FLAGS:STRING=-L/thirdparty_build/lib \
   -DENVOY_TEST_EXTRA_LINKER_FLAGS:STRING=-L/thirdparty_build/lib \

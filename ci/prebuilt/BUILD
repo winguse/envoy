@@ -88,8 +88,8 @@ filegroup(
 
 cc_library(
     name = "rapidjson",
-    hdrs = glob(["thirdparty/rapidjson-1.1.0/include/**/*.h"]),
-    includes = ["thirdparty/rapidjson-1.1.0/include"],
+    hdrs = glob(["thirdparty/rapidjson-b45c5408d18e491d8d4c158cbbff5a805089500c/include/**/*.h"]),
+    includes = ["thirdparty/rapidjson-b45c5408d18e491d8d4c158cbbff5a805089500c/include"],
 )
 
 cc_library(

@@ -165,7 +165,7 @@ public:
   void validateSchema(const std::string& schema) const override {
     rapidjson::Document document;
     if (document.Parse<0>(schema.c_str()).HasParseError()) {
-      throw std::invalid_argument(fmt::format("invalid schema \n Effor(offset {}) : {}\n",
+      throw std::invalid_argument(fmt::format("invalid schema \n Error(offset {}) : {}\n",
                                               document.GetErrorOffset(),
                                               GetParseError_En(document.GetParseError())));
     }

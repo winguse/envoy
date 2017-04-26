@@ -115,8 +115,8 @@ make install
 cd ..
 
 # rapidjson
-wget -O rapidjson-1.1.0.tar.gz https://github.com/miloyip/rapidjson/archive/v1.1.0.tar.gz
-tar xf rapidjson-1.1.0.tar.gz
+wget -O rapidjson-b45c540.tar.gz https://github.com/miloyip/rapidjson/archive/b45c5408d18e491d8d4c158cbbff5a805089500c.tar.gz
+tar xf rapidjson-b45c540.tar.gz
 
 # google test
 wget -O googletest-1.8.0.tar.gz https://github.com/google/googletest/archive/release-1.8.0.tar.gz
@@ -156,7 +156,7 @@ cmake \
 -DENVOY_PROTOBUF_INCLUDE_DIR:FILEPATH=$THIRDPARTY_BUILD/include \
 -DENVOY_PROTOBUF_PROTOC:FILEPATH=$THIRDPARTY_BUILD/bin/protoc \
 -DENVOY_GCOVR:FILEPATH=$THIRDPARTY_DIR/gcovr-3.3/scripts/gcovr \
--DENVOY_RAPIDJSON_INCLUDE_DIR:FILEPATH=$THIRDPARTY_DIR/rapidjson-1.1.0/include \
+-DENVOY_RAPIDJSON_INCLUDE_DIR:FILEPATH=$THIRDPARTY_DIR/rapidjson-b45c5408d18e491d8d4c158cbbff5a805089500c/include \
 -DENVOY_GCOVR_EXTRA_ARGS:STRING="-e test/* -e build/*" \
 -DENVOY_EXE_EXTRA_LINKER_FLAGS:STRING=-L$THIRDPARTY_BUILD/lib \
 -DENVOY_TEST_EXTRA_LINKER_FLAGS:STRING=-L$THIRDPARTY_BUILD/lib \
