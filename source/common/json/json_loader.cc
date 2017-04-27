@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -11,6 +12,7 @@
 #include "rapidjson/document.h"
 #include "rapidjson/error/en.h"
 #include "rapidjson/istreamwrapper.h"
+#include "rapidjson/reader.h"
 #include "rapidjson/schema.h"
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
@@ -230,12 +232,46 @@ ObjectPtr Factory::LoadFromFile(const std::string& file_path) {
   return ObjectPtr{new ObjectImplRoot(std::move(document))};
 }
 
+struct PrintHandler {
+    // Using for testing
+    bool Null() { printf("Null\n"); return true; }
+    bool Bool(bool) { printf("Bool\n"); return true; }
+    bool Int(int) { printf("Int\n"); return true; }
+    bool Uint(unsigned) { printf("Uint\n"); return true; }
+    bool Int64(int64_t) { printf("Int64\n"); return true; }
+    bool Uint64(uint64_t) { printf("Uint64\n"); return true; }
+    bool Double(double) { printf("Double\n"); return true; }
+    bool RawNumber(const char*, rapidjson::SizeType, bool) { printf("RawNumber\n"); return true; }
+    bool String(const char*, rapidjson::SizeType, bool) { printf("String\n"); return true; }
+    bool StartObject() { printf("StartObject"); return true; }
+    bool Key(const char*, rapidjson::SizeType, bool) { printf("Key\n"); return true; }
+    bool EndObject(rapidjson::SizeType) { printf("EndObject\n"); return true; }
+    bool StartArray() {  printf("StartArray\n"); return true; }
+    bool EndArray(rapidjson::SizeType) {  printf("EndArray\n"); return true; }
+};
+
 ObjectPtr Factory::LoadFromString(const std::string& json) {
+
+  PrintHandler handler;
+
+  rapidjson::Reader reader;
+  reader.IterativeParseInit();
+
+  rapidjson::StringStream json_stream(json.c_str());
+  while (!reader.IterativeParseComplete()) {
+      if (!reader.IterativeParseNext<rapidjson::kParseDefaultFlags>(json_stream, handler)) {
+          // throw parse error
+          break;
+      }
+  }
+
   rapidjson::Document document;
   if (document.Parse<0>(json.c_str()).HasParseError()) {
+    printf("Parse error");
     throw Exception(fmt::format("Error(offset {}): {}\n", document.GetErrorOffset(),
                                 GetParseError_En(document.GetParseError())));
   }
+
   return ObjectPtr{new ObjectImplRoot(std::move(document))};
 }
 
