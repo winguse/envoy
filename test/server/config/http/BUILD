@@ -12,6 +12,8 @@ envoy_cc_test(
     name = "config_test",
     srcs = ["config_test.cc"],
     deps = [
+        # dispatcher_lib is required for linking to succeed on GCC 5.4 ASAN builds.
+        "//source/common/event:dispatcher_lib",
         "//source/server/config/http:buffer_lib",
         "//source/server/config/http:dynamo_lib",
         "//source/server/config/http:fault_lib",
