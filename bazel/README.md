@@ -28,7 +28,7 @@ up-to-date with the latest security patches.
 2.  Install external dependencies libtoolize, cmake, and realpath libraries separately.
 ```
 On Ubuntu Machine, run the following commands:
- apt-get install libtoolize
+ apt-get install libtool
  apt-get install cmake
  apt-get install realpath
 ```
