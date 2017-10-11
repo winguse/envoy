@@ -7,6 +7,7 @@ import time
 
 restart_epoch = 0
 pid_list = []
+last_fork_pid = -1
 
 def force_kill_all_children():
   """ Iterate through all known child processes and force kill them. In the future we might consider
@@ -61,6 +62,7 @@ def sigchld_handler(signum, frame):
       ability to get the child process info directly from the signal handler so we need to iterate
       through all child processes and see what happened."""
 
+  global last_fork_pid
   print "got SIGCHLD"
 
   kill_all_and_exit = False
@@ -80,6 +82,9 @@ def sigchld_handler(signum, frame):
       print "PID={} exited with code={}".format(ret_pid, exit_code)
       if exit_code == 0:
         # Normal exit. We assume this was on purpose.
+        pass
+      elif ret_pid == last_fork_pid:
+        # reload pid exited abnormally. ignore it (we don't want to kill the good guys).
         pass
       else:
         # Something bad happened. We need to tear everything down so that whoever started the
@@ -106,6 +111,7 @@ def fork_and_exec():
       set the current restart epoch in an env variable that processes can read if they care. """
 
   global restart_epoch
+  global last_fork_pid 
   os.environ['RESTART_EPOCH'] = str(restart_epoch)
   print "forking and execing new child process at epoch {}".format(restart_epoch)
   restart_epoch += 1
@@ -118,6 +124,7 @@ def fork_and_exec():
     # Parent process
     print "forked new child process with PID={}".format(child_pid)
     pid_list.append(child_pid)
+    last_fork_pid = child_pid
 
 
 def main():
